@@ -1,4 +1,4 @@
-from nytapi import ArchiveAPI
+from modules.nytapi import ArchiveAPI
 
 NYT_API_KEY = "edfee37ae9e24f848d39bd3976afa7bd"
 
