@@ -1,2 +1,4 @@
 .idea/
 .gitignore
+data/
+examples/__pycache__/

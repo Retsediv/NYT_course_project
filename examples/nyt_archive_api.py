@@ -1,5 +1,7 @@
 from nytimesarchive import ArchiveAPI
 
+NYT_API_KEY = "edfee37ae9e24f848d39bd3976afa7bd"
+
 
 def filter_with_geo(article):
     for key in article['keywords']:
@@ -24,11 +26,15 @@ def clear_articles(articles):
     return articles
 
 
-with open("data_samples.txt", "w") as f:
-    api = ArchiveAPI('edfee37ae9e24f848d39bd3976afa7bd')
-    articles = api.query(2016, 11)['response']['docs']
-    geo_articles = clear_articles(list(filter(filter_with_geo, articles))[0:2])
+counter = 0
+for year in range(2017, 2018):
+    for month in range(1, 5):
+        with open("../data/{}-{}.txt".format(year, month), "w") as f:
+            api = ArchiveAPI(NYT_API_KEY)
+            articles = api.query(year, month)['response']['docs']
+            geo_articles = clear_articles(list(filter(filter_with_geo, articles)))
 
-    f.write(str(geo_articles))
+            f.write(str(geo_articles))
 
-    print(geo_articles)
+            counter += 1
+            print("Step: " + str(counter))
