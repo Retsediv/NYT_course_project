@@ -7,7 +7,7 @@ class Article:
 
         :param string pub_date:
         :param dict headline:
-        :param dict keywords:
+        :param list keywords:
         """
         self._pub_date = pub_date
         self._headline = headline
