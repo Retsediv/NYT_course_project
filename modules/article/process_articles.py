@@ -9,7 +9,7 @@ class ArticlesProcess:
         """
         Create instance of class and set a head of linked structure to None
         """
-        self.head = None
+        self._head = None
 
     def append(self, article):
         """
@@ -18,11 +18,12 @@ class ArticlesProcess:
         :param article:
         :return None:
         """
-        if self.head is None:
-            self.head = Node(article)
+        if self._head is None:
+            self._head = Node(article)
         else:
-            top = self.head
-            top.next = Node(article)
+            rest = self._head
+            self._head = Node(article)
+            self._head.next = rest
 
     def process(self):
         """
@@ -31,8 +32,7 @@ class ArticlesProcess:
         :return dict:
         """
         freq = {}
-        top = self.head
-
+        top = self._head
         while top is not None:
             for key_w in top.data.keywords():
                 if key_w['name'] == 'glocations':

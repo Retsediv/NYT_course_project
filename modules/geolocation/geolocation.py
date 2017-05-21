@@ -1,5 +1,7 @@
 import json
 import urllib.request
+import urllib.error
+from time import sleep
 
 
 class Geolocation:
@@ -21,16 +23,26 @@ class Geolocation:
         :param str s: place(city)
         :return tuple: lat, lng
         """
-        for i in range(len(self._keys)):
-            url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + urllib.request.quote(s) + \
-                  '&types=geocode&key=' + self._keys[i]
+        try:
+            i = 0
+            while len(self._keys):
+                sleep(0.5)
 
-            r = urllib.request.urlopen(url)
-            r = json.loads(r.read().decode('utf-8'))
+                url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + urllib.request.quote(s) + \
+                      '&types=geocode&key=' + self._keys[i]
 
-            if r['status'] == 'OVER_QUERY_LIMIT':
-                self._keys.remove(self._keys[i])
-            else:
-                break
+                r = urllib.request.urlopen(url)
+                r = json.loads(r.read().decode('utf-8'))
 
-        return r['results'][0]['geometry']['location']["lat"], r['results'][0]['geometry']['location']["lng"]
+                print(r['status'])
+
+                if r['status'] == 'OVER_QUERY_LIMIT' or r['status'] == 'REQUEST_DENIED':
+                    self._keys.pop(0)
+                    continue
+
+                if r['status'] != 'ZERO_RESULTS':
+                    return r['results'][0]['geometry']['location']["lat"], r['results'][0]['geometry']['location']["lng"]
+                else:
+                    return 0, 0
+        except urllib.error.HTTPError:
+            return 0, 0

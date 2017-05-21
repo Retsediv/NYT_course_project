@@ -1,5 +1,6 @@
 from flask import render_template
 from app import app
+import json
 
 
 @app.route('/')
@@ -9,5 +10,5 @@ def index():
 
 @app.route('/data/<year>/<month>')
 def data(year, month):
-    with open("./data/{}-{}.txt".format(year, month), "r") as file:
-        return str(file.readlines())
+    with open("./data/{}-{}.json".format(year, month), "r") as file:
+        return file.read()

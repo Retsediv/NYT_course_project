@@ -1,4 +1,5 @@
 from modules.nytapi import ArchiveAPI
+import json
 
 NYT_API_KEY = "edfee37ae9e24f848d39bd3976afa7bd"
 
@@ -27,14 +28,14 @@ def clear_articles(articles):
 
 
 counter = 0
-for year in range(2017, 2018):
-    for month in range(1, 5):
-        with open("../data/{}-{}.txt".format(year, month), "w") as f:
+for year in range(2010, 2017):
+    for month in range(1, 13):
+        with open("../data/{}-{}.json".format(year, month), "w") as f:
             api = ArchiveAPI(NYT_API_KEY)
             articles = api.query(year, month)['response']['docs']
             geo_articles = clear_articles(list(filter(filter_with_geo, articles)))
 
-            f.write(str(geo_articles))
+            f.write(json.dumps(geo_articles))
 
             counter += 1
             print("Step: " + str(counter))
