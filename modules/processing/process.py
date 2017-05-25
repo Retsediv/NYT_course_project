@@ -6,20 +6,9 @@ from modules.nytapi import ArchiveAPI
 import json
 
 NYT_API_KEY = "edfee37ae9e24f848d39bd3976afa7bd"
-GEO_KEYS = [
-    "AIzaSyAED-hosDmxN2bkNFEQteHNEcP0SVQebH8",
-    "AIzaSyDTdFBLKHB3CygvXpPi-pgnUTip_p2o4PQ",
-    "AIzaSyA6RY_IzWA5NbjIpUvaUrjeJmUN4EGSATE",
-    "AIzaSyBrezgCSQne1zOLo8mytYDfwGFkrMCsu1k",
-    "AIzaSyAZuw48KiSoyD-M02L6RvF8GVEyPYv6MGI",
-    "AIzaSyA3J0zIbVcA4wera_zhWEwaOERlMsFFk-A",
-    "AIzaSyCaF57Wyn59nBYzMSn10e8CuqDiURb2ZEA",
-    "AIzaSyCmvuR3MJFt-H9KQh2gSC5aamNfkLUkNc0",
-    "AIzaSyBpDlzvP4ETytbPk3zVYjC3VqXE7lSr7C4",
-    "AIzaSyD4LCpJ9ClNaCADy85n8n9VyRO2nCweaeA",
-    "AIzaSyAGxTZG7G34sqr-a3sNPKwVYarxNBjk-2g",
-    "AIzaSyDr8AapNc0IQvG-RJKYJi7jD_BRD7izHiI",
-    "AIzaSyBit41NBregOXu7pVcb-PTl_TEeRrfOKCg"]
+GEO_KEYS = ["AIzaSyBwsAdUVDASdIOyMYd3_Gphe1Lr6elFsd4",
+            "AIzaSyBV0BTEHsRNslkCU0zTIWfCid7FFabyGYk",
+            "AIzaSyBIcw1p16ECYpqkvPmVZQlIqaZjjwXdSxA"]
 
 
 def filter_with_geo(article):
@@ -46,13 +35,13 @@ def clear_articles(articles):
 
 
 counter = 0
-for year in range(2006, 2008):
-    for month in range(4, 13):
+for year in range(2016, 2017):
+    for month in range(1, 2):
         # Getting articles from NYT API
         api = ArchiveAPI(NYT_API_KEY)
         articles = api.query(year, month)['response']['docs']
         geo_articles = clear_articles(list(filter(filter_with_geo, articles)))
-
+        print(geo_articles)
         # Articles processing
         processing = ArticlesProcess()
         for article in geo_articles:
